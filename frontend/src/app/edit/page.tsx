@@ -3,7 +3,7 @@
 const Page = () => {
   return (
     <>
-      <main className="p-5">
+      <main className="">
         <div className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-lg space-y-5">
           <h2 className="text-2xl font-bold text-gray-800">Save Customer</h2>
 
@@ -44,11 +44,11 @@ const Page = () => {
             <label className="block text-sm font-medium text-gray-700">
               Address
             </label>
-            <textarea
-              placeholder="123, Galle Road, Colombo"
-              rows={3}
-              className="mt-1 w-full p-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-            ></textarea>
+            <input
+              type="address"
+              placeholder="Avenue, City, Country"
+              className="mt-1 w-full p-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
           <div className="flex space-x-4">
             <button className="w-full hand bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition">
