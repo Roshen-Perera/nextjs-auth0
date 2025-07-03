@@ -1,11 +1,11 @@
-import {Prisma, PrismaClient } from "@prisma/client";
+import {PrismaClient } from "@prisma/client";
 import Customer from "../model/Customer";
 
 const prisma = new PrismaClient();
 
 export async function addCustomer(customer: Customer) {
     console.log("Adding Customer...");
-    try{
+    try {
         await prisma.customer.create({
             data: {
                 name: customer.name,
@@ -14,11 +14,18 @@ export async function addCustomer(customer: Customer) {
                 address: customer.address
             }
         });
-        console.log("Customer [",customer.name,"] added successfully !!!")
+        console.log("Customer [", customer.name, "] added successfully !!!")
     } catch (error) {
+        if(error){
+            if((error as any).code == 'P2002'){
+                throw new Error("The customer with this email exists");
+            }
+        }
         throw error;
     }
 }
+
+//
 
 export async function deleteCustomer(email: string){
     try{
@@ -28,6 +35,12 @@ export async function deleteCustomer(email: string){
         console.log('Customer Deleted : [',email,"]");
     } catch (error) {
         console.log("Error deleting customer", error);
+        if(error){
+            if((error as any).code === 'P2025'){
+                throw new Error("The customer with this email doesnt exists");
+            }
+        }
+        throw error;
     }
 }
 
@@ -44,7 +57,13 @@ export async function updateField(email: string, customer: Customer){
         })
         console.log("Customer [",customer.name,"] updated successfully !!!")
     } catch (error) {
-        console.log("Error updating customer",error)
+        console.log("Error updating customer", error);
+        if(error){
+            if((error as any).code === 'P2025'){
+                throw new Error("The customer with this email doesnt exists");
+            }
+        }
+        throw error;
     }
 }
 
