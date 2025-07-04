@@ -1,6 +1,6 @@
 export default class Customer {
     name!: string;
     email!:string;
-    number!:string;
+    number!:number;
     address!:string;
 }

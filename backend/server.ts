@@ -1,10 +1,18 @@
 import express from 'express';
 import customerRoute from "./routes/customerRoute";
+import cors from 'cors';
 
 const app = express();
 const port = 3030;
 
 app.use(express.json()); // for parsing application/json
+
+app.use(cors({
+    origin: "http://localhost:3000",  // Allow frontend requests
+    methods: "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+    allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+    credentials: true
+}));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

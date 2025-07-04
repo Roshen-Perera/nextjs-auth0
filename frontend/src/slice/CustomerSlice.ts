@@ -13,7 +13,9 @@ export const addCustomer = createAsyncThunk(
   'customer/addCustomer',
   async (customer: Customer) => {
     try {
+      console.log("Adding customer : ", customer);
       const response = await api.post('/customer/add', customer)
+      alert("Customer added successfully");
       return response.data;
     } catch (error) {
       return console.error('error', error);
@@ -49,7 +51,8 @@ export const getCustomer = createAsyncThunk(
   'customer/getCustomer',
   async () => {
     try {
-      const response = await api.get(`/view`);
+      const response = await api.get(`customer/get`);
+      console.log("Getting customer : ", response.data);
       return response.data;
     } catch (error) {
       return console.log('error', error);
@@ -72,6 +75,9 @@ const CustomerSlice = createSlice({
     },
     deleteCustomers: (state, action: PayloadAction<string>) => {
       state.filter((customer: Customer) => customer.email !== action.payload);
+    },
+    getCustomers: (state, action: PayloadAction<Customer[]>) => {
+      action.payload.map((customer: Customer) => state.push(customer));
     }
   },
   extraReducers: (builder) => {
